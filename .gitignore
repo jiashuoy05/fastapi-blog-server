@@ -16,6 +16,8 @@ wheels/
 blog.db
 
 # Images
-**/media/*
+**/media/
 **/populate_images/
 
+# MacOS system files
+.DS_Store
