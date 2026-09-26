@@ -11,7 +11,7 @@ from app.core.database import AsyncSessionLocal, engine
 from app.utils.image_utils import PROFILE_PICS_DIR
 from app.main import app
 
-POPULATE_IMAGES_DIR = Path(__file__).parent / "populate_images"
+POPULATE_IMAGES_DIR = Path("app/populate_images")
 
 USERS = [
     {

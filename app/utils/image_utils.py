@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-PROFILE_PICS_DIR = Path(__file__).parent / "media" / "profile_pics"
+PROFILE_PICS_DIR = Path("app/media/profile_pics")
 
 def process_profile_image(content: bytes) -> str:
     with Image.open(BytesIO(content)) as original:

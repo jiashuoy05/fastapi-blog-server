@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 from app.core.config import settings
 from pathlib import Path
 
-templates = Jinja2Templates(directory=Path(__file__).parent / "templates")
+templates = Jinja2Templates(directory="app/templates")
 
 async def send_email(
     to_email: str,
