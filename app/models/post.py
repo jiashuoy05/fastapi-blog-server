@@ -1,11 +1,9 @@
-from __future__ import annotations
-
 from datetime import UTC, datetime
 
 from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.core.database import Base
+from app.core.database import Base
 from . import user
 
 class Post(Base):
@@ -24,4 +22,4 @@ class Post(Base):
         default=lambda: datetime.now(UTC),
     )
 
-    author: Mapped[user.User] = relationship("User", back_populates="posts") 
+    author: Mapped["user.User"] = relationship("User", back_populates="posts") 

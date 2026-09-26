@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
-from src.schemas.user import UserPublic
+from app.schemas.user import UserPublic
 
 class PostBase(BaseModel):
     title: str = Field(min_length=1, max_length=100)

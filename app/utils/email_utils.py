@@ -5,7 +5,7 @@ from email.message import EmailMessage
 import aiosmtplib
 from fastapi.templating import Jinja2Templates
 
-from src.config import settings
+from app.core.config import settings
 from pathlib import Path
 
 templates = Jinja2Templates(directory=Path(__file__).parent / "templates")

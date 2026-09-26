@@ -3,7 +3,7 @@ from fastapi import status
 from fastapi import APIRouter
 from fastapi import Query
 
-from src.schemas.post import (
+from app.schemas.post import (
     PostCreate,
     PostResponse,
     PostUpdate,
@@ -15,11 +15,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from sqlalchemy import select, func
 
-from src.models.user import User
-from src.models.post import Post
-from src.core.database import get_db
+from app.models.user import User
+from app.models.post import Post
+from app.core.database import get_db
 
-from src.auth import CurrentUser
+from app.utils.auth import CurrentUser
 
 router = APIRouter()
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.core.database import Base
+from app.core.database import Base
 from . import post
 from . import password_reset_token
 

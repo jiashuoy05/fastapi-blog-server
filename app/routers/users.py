@@ -11,9 +11,9 @@ from fastapi import (
 from PIL import UnidentifiedImageError
 
 from starlette.concurrency import run_in_threadpool
-from src.image_utils import process_profile_image, delete_profile_image
+from app.utils.image_utils import process_profile_image, delete_profile_image
 
-from src.schemas.user import (
+from app.schemas.user import (
     UserCreate,
     UserPublic,
     UserUpdate,
@@ -23,7 +23,7 @@ from src.schemas.user import (
     ForgotPasswordRequest,
     ResetPasswordRequest
 )
-from src.schemas.post import (
+from app.schemas.post import (
     PostResponse,
     PaginatedPostsResponse
 )
@@ -35,17 +35,17 @@ from sqlalchemy import (
     func,
     delete as sql_delete
 )
-from src.models import (
+from app.models import (
     User,
     Post,
     PasswordResetToken
 )
-from src.core.database import get_db
+from app.core.database import get_db
 
 from datetime import timedelta, UTC, datetime
 from fastapi.security import OAuth2PasswordRequestForm
 
-from src.auth import (
+from app.utils.auth import (
     create_access_token,
     hash_password,
     verify_password,
@@ -54,8 +54,8 @@ from src.auth import (
     hash_reset_token
 )
 
-from src.config import settings
-from src.email_utils import send_password_reset_email
+from app.core.config import settings
+from app.utils.email_utils import send_password_reset_email
 
 router = APIRouter()
 

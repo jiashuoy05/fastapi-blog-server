@@ -3,13 +3,13 @@ from datetime import UTC, datetime, timedelta
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from pwdlib import PasswordHash
-from src.config import settings
+from app.core.config import settings
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.models.user import User
-from src.core.database import get_db
+from app.models.user import User
+from app.core.database import get_db
 
 import hashlib
 import secrets

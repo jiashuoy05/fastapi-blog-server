@@ -2,7 +2,7 @@ from __future__ import annotations
 from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import UTC, datetime
-from src.core.database import Base
+from app.core.database import Base
 from . import user
 
 class PasswordResetToken(Base):
