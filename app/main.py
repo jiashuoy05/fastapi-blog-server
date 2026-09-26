@@ -16,7 +16,7 @@ from app.models import (
     User,
     Post
 )
-from app.core.database import Base, engine, get_db
+from app.core.database import engine, get_db
 from contextlib import asynccontextmanager
 from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
 
@@ -25,9 +25,6 @@ from app.core.config import settings
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    # Startup: Create database tables if they don't exist
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all) # run_sync is used to run synchronous code in an asynchronous context
     yield
     # Shutdown: Dispose of the engine to close all connections
     await engine.dispose()
