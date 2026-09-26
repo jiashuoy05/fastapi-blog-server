@@ -5,8 +5,10 @@ from pathlib import Path
 import httpx
 from sqlalchemy import delete, select, update
 
-from app.models.user import User
-from app.models.post import Post
+from app.models import (
+    User,
+    Post
+)
 from app.core.database import AsyncSessionLocal, engine
 from app.utils.image_utils import PROFILE_PICS_DIR
 from app.main import app
