@@ -29,7 +29,12 @@ async def lifespan(_app: FastAPI):
     # Shutdown: Dispose of the engine to close all connections
     await engine.dispose()
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    lifespan=lifespan,
+    docs_url=None if settings.production else "/docs",
+    redoc_url=None if settings.production else "/redoc",
+    openapi_url=None if settings.production else "/openapi.json", 
+)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 

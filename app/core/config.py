@@ -34,4 +34,6 @@ class Settings(BaseSettings):
 
     frontend_url: str = "http://localhost:8000"
 
+    production: bool = False
+
 settings = Settings() # Load settings from .env file and environment variables
