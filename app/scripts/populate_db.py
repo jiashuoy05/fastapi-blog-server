@@ -7,10 +7,12 @@ from sqlalchemy import delete, select, update
 
 from app.models import (
     User,
-    Post
+    Post,
+    PasswordResetToken,
 )
+from app.core.config import settings
 from app.core.database import AsyncSessionLocal, engine
-from app.utils.image_utils import PROFILE_PICS_DIR
+from app.utils.image_utils import _get_s3_client
 from app.main import app
 
 POPULATE_IMAGES_DIR = Path("app/populate_images")
@@ -237,15 +239,24 @@ POST_44 = {
 
 
 async def clear_existing_data() -> None:
-    # Delete profile pictures from local storage
-    if PROFILE_PICS_DIR.exists():
-        for file in PROFILE_PICS_DIR.iterdir():
-            if file.is_file() and file.name != ".gitkeep":
-                file.unlink()
-        print(f"Deleted profile pictures from {PROFILE_PICS_DIR}")
+    # Delete profile pictures from S3 (need DB records to know which files)
+    async with AsyncSessionLocal() as db:
+        result = await db.execute(
+            select(User.image_file).where(User.image_file.is_not(None)),
+        )
+        filenames = result.scalars().all()
+
+    if filenames:
+        s3 = _get_s3_client()
+        s3.delete_objects(
+            Bucket=settings.s3_bucket_name,
+            Delete={"Objects": [{"Key": f"profile_pics/{f}"} for f in filenames]},
+        )
+        print(f"Deleted {len(filenames)} images from S3")
 
     # Clear database tables (order respects foreign keys)
     async with AsyncSessionLocal() as db:
+        await db.execute(delete(PasswordResetToken))
         await db.execute(delete(Post))
         await db.execute(delete(User))
         await db.commit()
@@ -291,7 +302,7 @@ async def populate() -> None:
         transport=transport,
         base_url="http://localhost",
     ) as client:
-        # Clear existing data (local images first, then database)
+        # Clear existing data (S3 images first, then database)
         await clear_existing_data()
 
         users: list[dict] = []
@@ -379,7 +390,7 @@ async def populate() -> None:
     print("\nDone!")
     print(f"  {len(USERS)} users")
     print(f"  {len(POSTS) + 1} posts")
-    print("  Profile pictures saved locally")
+    print("  Profile pictures uploaded to S3")
 
 
 if __name__ == "__main__":

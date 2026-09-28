@@ -32,7 +32,6 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-app.mount("/media", StaticFiles(directory="app/media"), name="media")
 
 templates = Jinja2Templates(directory="app/templates")
 
