@@ -25,3 +25,9 @@ dependencies = [
 ]
 [tool.fastapi]
 entrypoint = "app.main:app"
+
+[dependency-groups]
+dev = [
+    "moto[s3]>=5.2.3",
+    "pytest>=9.1.1",
+]
